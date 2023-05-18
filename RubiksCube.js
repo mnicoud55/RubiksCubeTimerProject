@@ -36,5 +36,10 @@ class RubiksCube {
         print(average)
         return average
     }
+    function bestTime(mostRecentTime)  {
+        if (mostRecentTime < bestTime)  {
+            bestTime = mostRecentTime
+        }
+    }
 
 }
