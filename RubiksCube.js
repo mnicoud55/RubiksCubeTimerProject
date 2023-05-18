@@ -12,15 +12,20 @@ class RubiksCube {
     }
 
     main() {
+        var fastestTime = 100000000000000000
         var bestBO5 = 1000000000000000000
         var bestBO12 = 1000000000000000000
         var bestBO50 = 1000000000000000000
+
         while (sessionrunning) {
-            //getTime
-            //addtime to times
+            time = getTime()
+            if (time < fastestTime) {
+                fastestTime = time
+            }
+            this.times.push(time)
             if (times.length >= 5) {
-                //curr = showBestOf5
-                if (curr < bestBO5) {
+                currBO5 = bestof5average
+                if (currBO5 < bestBO5) {
                     bestBO5 = curr
                 }
             }
