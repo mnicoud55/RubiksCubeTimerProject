@@ -1,10 +1,29 @@
-class RubiksCubeProject {
-    Timer
-    Best of calculator
-    Fastest Time
-    Calculate Average
-    Array of times
-    Scrambles Algorithm
+class RubiksCube {
+    //Timer
+    //Best of calculator
+    //Fastest Time
+    //Calculate Average
+    #times;
+    //Scrambles Algorithm
+
+
+    while (sessionrunning) {
+        getTime
+        if (#times.length >= 5) {
+            showBestOf5
+        }
+        if (this.#times.length >= 12) {
+            showBestOf12
+        }
+    }
+
+    }
+
+    constructor() {
+        this.#times = []
+    }
+
+    function getTime()
 
     function calculateAverage(times) {
         let temp = times
@@ -14,6 +33,7 @@ class RubiksCubeProject {
             sum += temp[i]
         }
         var average = sum / (times.length - 2)
+        print(average)
         return average
     }
 
