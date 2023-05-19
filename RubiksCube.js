@@ -1,3 +1,18 @@
+var t = document.getElementById('time')
+t.innerHTML = "Time: 0"
+window.addEventListener('keydown', function(e) {
+    if (e.key == " " || e.code == "Space" || e.keyCode == 32) {
+        if (t.innerHTML == "Time: 0")
+            t.innerHTML = "Time: " + getT()
+        else 
+        t.innerHTML = "Time: 0"
+    }
+})
+
+function getT() {
+    return 1
+}
+
 class RubiksCube {
     //Timer
     //Best of calculator
@@ -10,7 +25,7 @@ class RubiksCube {
         this.times = []
         main()
     }
-
+    
     main() {
         var fastestTime = 100000000000000000
         var bestBO5 = 1000000000000000000
@@ -45,7 +60,9 @@ class RubiksCube {
         }
     }
 
-    getTime()
+    static getTime() {
+        return 1
+    }
 
     calculateAverage(times) {
         let temp = times
