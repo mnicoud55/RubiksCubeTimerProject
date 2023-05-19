@@ -1,18 +1,3 @@
-var t = document.getElementById('time')
-t.innerHTML = "Time: 0"
-window.addEventListener('keydown', function(e) {
-    if (e.key == " " || e.code == "Space" || e.keyCode == 32) {
-        if (t.innerHTML == "Time: 0")
-            t.innerHTML = "Time: " + getT()
-        else 
-        t.innerHTML = "Time: 0"
-    }
-})
-
-function getT() {
-    return 1
-}
-
 class RubiksCube {
     //Timer
     //Best of calculator
@@ -77,3 +62,23 @@ class RubiksCube {
     }
 
 }
+
+var t = document.getElementById('time')
+t.innerHTML = "Time: 0"
+let recordingTime = false
+let start, end
+window.addEventListener('keydown', function(e) {
+    if (e.key == " " || e.code == "Space" || e.keyCode == 32) {
+        if (!recordingTime) {
+            start = new Date()
+            t.innerHTML = "Recording Time" 
+            recordingTime = true
+        }
+        else {
+            end = new Date()
+            let totalTime = end.getTime() - start.getTime()
+            t.innerHTML = "Time in ms: " + totalTime
+            recordingTime = false
+        }
+    }
+})
