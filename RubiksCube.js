@@ -63,22 +63,33 @@ class RubiksCube {
 
 }
 
-var t = document.getElementById('time')
-t.innerHTML = "Time: 0"
+var timeElement = document.getElementById('time')
+timeElement.innerHTML = "Time: 0.00 s"
 let recordingTime = false
 let start, end
 window.addEventListener('keydown', function(e) {
     if (e.key == " " || e.code == "Space" || e.keyCode == 32) {
         if (!recordingTime) {
             start = new Date()
-            t.innerHTML = "Recording Time" 
             recordingTime = true
-        }
-        else {
+            displayTime(recordingTime)
+        } else {
             end = new Date()
             let totalTime = end.getTime() - start.getTime()
-            t.innerHTML = "Time in ms: " + totalTime
+            timeElement.innerHTML = "Time: " + totalTime + " ms"
             recordingTime = false
         }
     }
 })
+function displayTime(recording) {
+    if (recording) {
+        let today = new Date()
+        let runningTime = (today.getTime() - start.getTime())
+        if (Math.trunc(runningTime / 1000) > 0) {
+            timeElement.innerHTML = "Time: " + Math.trunc(runningTime / 1000) + "." + (runningTime % 1000) + " s"
+        } else {
+            timeElement.innerHTML = "Time: 0." + runningTime  + " s"
+        }
+        setTimeout(displayTime.bind(null, recordingTime), 1)
+    }
+}
