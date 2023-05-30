@@ -5,6 +5,7 @@ class RubiksCube {
     //Calculate Average
     times;
     fastestTime;
+    slowestTime;
     bestBO5;
     bestBO12;
     bestBO50;
@@ -13,6 +14,7 @@ class RubiksCube {
     constructor() {
         this.times = []
         this.fastestTime = 100000000000000000
+        this.slowestTime = 100000000000000000
         this.bestBO5 = 1000000000000000000
         this.bestBO12 = 1000000000000000000
         this.bestBO50 = 1000000000000000000
@@ -22,6 +24,9 @@ class RubiksCube {
         this.times.push(time)
         if (time < this.fastestTime) {
             this.fastestTime = time
+        }
+        if (time > this.slowestTime) {
+            this.slowestTime = time
         }
         if (this.times.length >= 5) {
             //showBestOf5
@@ -43,26 +48,44 @@ class RubiksCube {
         }
     }
 
-    calculateAverage(times) {
+    calculateAverage(times, numTimes) {
         let temp = times.map((x) => (x))
-        temp.sort()
-        var sum = temp[0]
-        var average = sum
-        for(let i = 1; i < times.length; i++) {
+        let sum = 0
+        let average = 0
+        let lowestIndex = times.length-numTimes
+        let highestIndex = times.length-numTimes
+
+        for(let i = times.length-numTimes; i < times.length; i++) {
+            if (temp[i] < temp[lowestIndex])
+                lowestIndex = i
+            if (temp[i] > temp[highestIndex])
+                highestIndex = i
             sum += temp[i]
         }
-        var average = sum / (times.length)
-        
-        console.log("Average: " + average)
+
+        sum -= temp[lowestIndex]
+        sum -= temp[highestIndex]
+        average = sum / (numTimes-2)
         return average
     }
 
+    calculateMean(times, numTimes) {
+        let temp = times.map((x) => (x))
+        let sum = 0
+        let average = 0
+        for(let i = times.length-numTimes; i < times.length; i++) {
+            sum += temp[i]
+        }
+        average = sum / (numTimes)
+        return average
+    }
 }
 
 let cube = new RubiksCube()
 
 let timeElement = document.getElementById('time')
 let averageElement = document.getElementById('average')
+let meanElement = document.getElementById('mean')
 
 let isRecordingTime = false
 let start, end
@@ -80,7 +103,12 @@ window.addEventListener('keydown', function(e) {
             timeElement.style="border:azure; border-width:2px; padding:5px; display:inline; border-style:outset;"
             displayRunningTime()
             cube.updateTimes(totalTime)
-            averageElement.innerHTML = "Average Time: " + cube.calculateAverage(cube.times)  + " ms"        }
+            averageElement.innerHTML = "Session Average (" + cube.times.length + " Times): Min 3 Attempts"  
+            if (cube.times.length >= 3)
+                averageElement.innerHTML = "Session Average (" + cube.times.length + " Times): " + cube.calculateAverage(cube.times, cube.times.length) + " ms"  
+            meanElement.innerHTML = "Session Mean (" + cube.times.length + " Times): " + cube.calculateMean(cube.times, cube.times.length) + " ms"              
+        }
+
     }
 })
 function displayRunningTime() {
